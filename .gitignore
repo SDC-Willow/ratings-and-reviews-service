@@ -1,8 +1,0 @@
-node_modules
-/client/dist/bundle.js
-coverage/
-config.js
-.env
-hackreactor-fec.pem
-/client/dist/bundle.js.br
-/client/dist/bundle.js.gz
