@@ -16,14 +16,14 @@ CREATE TABLE reviews (
     id INT NOT NULL AUTO_INCREMENT,
     product_id INT,
     rating INT,
-    date VARCHAR(60),
-    summary VARCHAR(60),
-    body VARCHAR(200),
+    date VARCHAR(100),
+    summary VARCHAR(300),
+    body VARCHAR(500),
     recommend BOOLEAN,
     reported BOOLEAN,
     reviewer_name VARCHAR(60),
     reviewer_email VARCHAR(60),
-    response VARCHAR(60),
+    response VARCHAR(500),
     helpfulness INT,
     primary key (id),
     foreign key (product_id) REFERENCES product (id)
@@ -32,7 +32,7 @@ CREATE TABLE reviews (
 CREATE TABLE reviews_photos (
     id INT NOT NULL AUTO_INCREMENT,
     review_id INT,
-    url VARCHAR(100),
+    url VARCHAR(300),
     primary key (id),
     foreign key (review_id) REFERENCES reviews (id)
 );
@@ -53,6 +53,5 @@ CREATE TABLE characteristic_reviews (
     primary key (id),
     foreign key (characteristic_id) REFERENCES characteristics (id)
 );
-
 
 -- mysql -u root < server/schema.sql -p to execute the file
