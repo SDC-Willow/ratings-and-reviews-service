@@ -20,6 +20,7 @@
   "homepage": "https://github.com/SDC-Willow/ratings-and-reviews-service#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "lodash": "^4.17.21",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.12"
   }
