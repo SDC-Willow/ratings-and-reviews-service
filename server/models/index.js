@@ -20,8 +20,14 @@ const Review = (review) => {
     this.date = review.date;
     this.reviewer_name = review.reviewer_name;
     this.helpfulness = review.helpfulness;
-    this.photos.review.photos;
+    this.photos = review.photos;
 };
+
+// const Meta = (meta) => {
+//     this.product_id = meta.product_id;
+//     this.ratings = meta.ratings;
+//     this.recommended = meta.recommended;
+// }
 
 // methods
 // Product.findById = (product_id, result) => {
@@ -60,7 +66,12 @@ Review.findAll = (product_id, page, count, result) => {
         // product name not found
         result('reviews not found', null);
     });
-}
+};
+
+// Meta.findAll = (product_id) => {
+//     // db.query()
+// }
 
 // module.exports = Product;
 module.exports = Review;
+// module.exports = Meta;

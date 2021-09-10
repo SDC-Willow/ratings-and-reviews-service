@@ -12,3 +12,5 @@ require('./routes/index.js')(app);
 app.listen(port, () => {
     console.log(`Listening at port ${port}`);
 });
+
+// module.exports = app;
