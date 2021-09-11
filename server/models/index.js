@@ -1,4 +1,6 @@
+const { result } = require('lodash');
 const db = require('../db');
+const {arrayToQueryConverter, objectToQueryConverter} = require('../shapers/reviews_create.js');
 
 // constructor
 // const Product = (product) => {
@@ -63,8 +65,51 @@ Review.findAll = (product_id, page, count, result) => {
             return;
         }
 
-        // product name not found
+        // reviews not found
         result('reviews not found', null);
+    });
+};
+
+Review.create = (product_id, rating, summary, body, recommend, username, email, photos, characteristics, result) => {
+    db.query(`START TRANSACTION; 
+    INSERT INTO reviews(product_id, rating, summary, body, recommend, reviewer_name, reviewer_email)
+        VALUES('${product_id}', '${rating}', '${summary}', '${body}', '${recommend}', '${username}', '${email}');
+    INSERT INTO reviews_photos(review_id, url) 
+        VALUES${arrayToQueryConverter(LAST_INSERT_ID(), photos)};
+    INSERT INTO characteristic_reviews(characteristic_id, review_id, value)
+        VALUES${objectToQueryConverter(characteristics, LAST_INSERT_ID())};
+    COMMIT;`, (err, res) => {
+        if (err) {
+            console.log('error', err);
+            result(err, null);
+        } else {
+            console.log('review created!');
+            result(null, res);
+        }
+    });
+};  
+
+Review.updateHelpfulness = (review_id) => {
+    db.query(`UPDATE reviews SET helpfulness = helpfulness+1 WHERE id = ${review_id}`, (err, res) => {
+        if (err) {
+            console.log('error in updating helpfulness models', err);
+            result(err, null);
+        } else {
+            console.log('helpfulness updated!');
+            result(null, res);
+        }
+    });
+};
+
+Review.updateReported = (review_id) => {
+    db.query(`UPDATE reviews SET reported = true WHERE id = ${review_id}`, (err, res) => {
+        if (err) {
+            console.log('error in updating reported models', err);
+            result(err, null);
+        } else {
+            console.log('report updated!');
+            result(null, res);
+        }
     });
 };
 

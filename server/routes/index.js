@@ -6,7 +6,7 @@ module.exports = app => {
     // app.get('/product', products.findOne);
     app.get('/reviews', reviews.findAllReviews);
     app.get('/reviews/meta');
-    app.post('/reviews');
-    app.put('/reviews/:review_id/helpful');
-    app.put('/reviews/:review_id/report');
+    app.post('/reviews', reviews.create);
+    app.put('/reviews/helpful', reviews.updateHelpfulness);
+    app.put('/reviews/report', reviews.updateReported);
 }
