@@ -40,8 +40,6 @@ const recommendedShaper = (jsonArray) => {
 const characteristicsShaper = (jsonArray) => {
     let characteristics = {};
     let names = _.uniq(JSON.parse(jsonArray[0].name));
-    console.log('🐿', JSON.parse(jsonArray[0].name));
-    console.log('🐿', JSON.parse(jsonArray[0].characteristics));
     let charsRatings = JSON.parse(jsonArray[0].characteristics);
     for (let i = 0; i < names.length; i++) {
         const capitalized = names[i].charAt(0).toUpperCase() + names[i].slice(1);

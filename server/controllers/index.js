@@ -29,14 +29,13 @@ exports.findMetaData = (req, res) => {
         if (err) {
             res.status(400).send(err);
         } else {
-            console.log('☘️', data);
             res.status(200).send(metaShaper(data, req.query.product_id));
         }
     });
 };
 
 exports.create = (req, res) => {
-    Review.create(req.body.product_id, req.body.rating, req.body.summary, req.body.body, req.body.recommend, req.body.name, req.body.email, (err, data) => {
+    Review.create(req.body.product_id, req.body.rating, req.body.summary, req.body.body, req.body.recommend, req.body.name, req.body.email, req.body.photos, req.body.characteristics, (err, data) => {
         if (err) {
             res.status(500).send('error in creating review', err);
         } else {

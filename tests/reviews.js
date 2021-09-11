@@ -12,8 +12,8 @@ const request = require('supertest')('http://localhost:3000/reviews');
 describe('GET /reviews/', () => {
     it('responds with json', async function () {
         const response = await request.get('/reviews');
-        expect(response.status).to.eql(404);
-        console.log(response);
+        expect(response.status).to.eql(200);
+        
         // expect(response.body).to.eql([2,3,8,7]);
     });
 });
