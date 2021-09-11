@@ -1,6 +1,7 @@
 // const Product = require('../models/index.js');
 const Review = require('../models/index.js');
 const {reviewsShaper, photosShaper, photosGatherer} = require('../shapers/reviews.js');
+const metaShaper = require('../shapers/metadata.js');
 
 // exports.findOne = (req, res) => {
 //     Product.findById(req.query.product_id, (err, data) => {
@@ -23,6 +24,17 @@ exports.findAllReviews = (req, res) => {
     });
 };
 
+exports.findMetaData = (req, res) => {
+    Review.findMetaData(req.query.product_id, (err, data) => {
+        if (err) {
+            res.status(400).send(err);
+        } else {
+            console.log('☘️', data);
+            res.status(200).send(metaShaper(data, req.query.product_id));
+        }
+    });
+};
+
 exports.create = (req, res) => {
     Review.create(req.body.product_id, req.body.rating, req.body.summary, req.body.body, req.body.recommend, req.body.name, req.body.email, (err, data) => {
         if (err) {
@@ -40,7 +52,7 @@ exports.updateHelpfulness = (req, res) => {
             res.status(500).send('error in updating helpful controllers', err);
         } else {
             console.log('helpfulness updated!!', data);
-            res.status(204).send('helpfulness updated!', data);
+            res.status(204).send('this review has been marked as helpful!');
         }
     });
 };
@@ -52,7 +64,7 @@ exports.updateReported = (req, res) => {
             res.status(500).send('error in updating reported controllers', err);
         } else {
             console.log('reported updated!!', data);
-            res.status(204).send('reported updated!', data);
+            res.status(204).send('your review has been successfully reported');
         }
     });
 };

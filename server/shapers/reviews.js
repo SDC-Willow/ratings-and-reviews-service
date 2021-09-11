@@ -1,4 +1,5 @@
 const _ = require('lodash');
+
 const reviewsShaper = (json, product_id, page, count) => {
     let data = {
         product: '',

@@ -25,12 +25,6 @@ const Review = (review) => {
     this.photos = review.photos;
 };
 
-// const Meta = (meta) => {
-//     this.product_id = meta.product_id;
-//     this.ratings = meta.ratings;
-//     this.recommended = meta.recommended;
-// }
-
 // methods
 // Product.findById = (product_id, result) => {
 //     db.query(`SELECT name FROM product WHERE id = ${product_id}`, (err, data) => {
@@ -70,6 +64,18 @@ Review.findAll = (product_id, page, count, result) => {
     });
 };
 
+Review.findMetaData = (product_id, result) => {
+    db.query(`select reviews.id as review_id, reviews.rating as ratings, reviews.recommend as recommended, JSON_ARRAYAGG(characteristics.name) AS name, JSON_OBJECTAGG(characteristic_reviews.characteristic_id, characteristic_reviews.value) AS characteristics FROM reviews JOIN characteristics ON reviews.product_id = characteristics.product_id JOIN characteristic_reviews ON characteristics.id = characteristic_reviews.characteristic_id where reviews.product_id = ${product_id} GROUP BY reviews.id;`, (err, data) => {
+        if (err) {
+            console.log('error in findmetadata models', err);
+            result(err, null);
+        } else {
+            console.log('meta data found!', data);
+            result(null, data);
+        }
+    });
+};
+
 Review.create = (product_id, rating, summary, body, recommend, username, email, photos, characteristics, result) => {
     db.query(`START TRANSACTION; 
     INSERT INTO reviews(product_id, rating, summary, body, recommend, reviewer_name, reviewer_email)
@@ -89,7 +95,7 @@ Review.create = (product_id, rating, summary, body, recommend, username, email, 
     });
 };  
 
-Review.updateHelpfulness = (review_id) => {
+Review.updateHelpfulness = (review_id, result) => {
     db.query(`UPDATE reviews SET helpfulness = helpfulness+1 WHERE id = ${review_id}`, (err, res) => {
         if (err) {
             console.log('error in updating helpfulness models', err);
@@ -101,7 +107,7 @@ Review.updateHelpfulness = (review_id) => {
     });
 };
 
-Review.updateReported = (review_id) => {
+Review.updateReported = (review_id, result) => {
     db.query(`UPDATE reviews SET reported = true WHERE id = ${review_id}`, (err, res) => {
         if (err) {
             console.log('error in updating reported models', err);
@@ -113,10 +119,5 @@ Review.updateReported = (review_id) => {
     });
 };
 
-// Meta.findAll = (product_id) => {
-//     // db.query()
-// }
-
 // module.exports = Product;
 module.exports = Review;
-// module.exports = Meta;
