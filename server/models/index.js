@@ -77,20 +77,38 @@ Review.findMetaData = (product_id, result) => {
 };
 
 Review.create = (product_id, rating, summary, body, recommend, username, email, photos, characteristics, result) => {
-    db.query(`START TRANSACTION; 
-    INSERT INTO reviews(product_id, rating, summary, body, recommend, reviewer_name, reviewer_email)
-        VALUES('${product_id}', '${rating}', '${summary}', '${body}', '${recommend}', '${username}', '${email}');
-    INSERT INTO reviews_photos(review_id, url) 
-        VALUES${arrayToQueryConverter(LAST_INSERT_ID(), photos)};
-    INSERT INTO characteristic_reviews(characteristic_id, review_id, value)
-        VALUES${objectToQueryConverter(characteristics, LAST_INSERT_ID())};
-    COMMIT;`, (err, res) => {
+    db.query(`SELECT MAX(id) + 1 FROM reviews`, (err, res) => {
         if (err) {
-            console.log('error', err);
-            result(err, null);
+            res(err, null);
         } else {
-            console.log('review created!');
-            result(null, res);
+            let id = Object.values(res[0])[0];
+            db.beginTransaction(`INSERT INTO reviews(product_id, rating, summary, body, recommend, reviewer_name, reviewer_email) VALUES('${product_id}', '${rating}', '${summary}', '${body}', '${recommend}', '${username}', '${email}');`, (err) => {
+                if (err) {
+                    console.log('error first query', err);
+                } else {
+                    db.query(`SET FOREIGN_KEY_CHECKS=0;`, (err) => {
+                        if (err) {
+                            console.log('error in set foreign key', err);
+                        } else {
+                            db.query(`INSERT INTO reviews_photos(review_id, url) VALUES${arrayToQueryConverter(photos, id)};`, (err) => {
+                                if (err) {
+                                    console.log('error in second query', err);
+                                } else {
+                                    db.query(`INSERT INTO characteristic_reviews(characteristic_id, review_id, value) VALUES${objectToQueryConverter(characteristics, id)};`, (err, res) => {
+                                        if (err) {
+                                            console.log('error in third query', err);
+                                            result(err, null);
+                                        } else {
+                                            console.log('created the review!!!!!');
+                                            result(null, res);
+                                        }
+                                    })
+                                }
+                            });
+                        }
+                    });
+                }
+            });  
         }
     });
 };  

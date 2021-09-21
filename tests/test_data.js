@@ -45,4 +45,17 @@ const test = {
     ]
 };
 
+
+const data = {
+    "product_id": "1",
+    "rating": "1",
+    "summary": "heheheh",
+    "body": "ahahah",
+    "recommend": "1",
+    "name": "gugug",
+    "email": "ddhdh",
+    "photos": ["hihihih", "hahahah"],
+    "characteristics": {"1": "4", "2": "3"}
+}
+
 module.exports = test;

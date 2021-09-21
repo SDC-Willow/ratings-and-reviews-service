@@ -37,7 +37,7 @@ exports.findMetaData = (req, res) => {
 exports.create = (req, res) => {
     Review.create(req.body.product_id, req.body.rating, req.body.summary, req.body.body, req.body.recommend, req.body.name, req.body.email, req.body.photos, req.body.characteristics, (err, data) => {
         if (err) {
-            res.status(500).send('error in creating review', err);
+            res.status(500).send(err);
         } else {
             res.status(201).send(data);
         }
