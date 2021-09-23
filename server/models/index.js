@@ -77,6 +77,7 @@ Review.findMetaData = (product_id, result) => {
 };
 
 Review.create = (product_id, rating, summary, body, recommend, username, email, photos, characteristics, result) => {
+    recommend = recommend === 'true' ? 1 : 0;
     db.query(`SELECT MAX(id) + 1 FROM reviews`, (err, res) => {
         if (err) {
             res(err, null);

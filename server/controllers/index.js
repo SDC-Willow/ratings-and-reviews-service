@@ -45,6 +45,7 @@ exports.create = (req, res) => {
 };
 
 exports.updateHelpfulness = (req, res) => {
+    console.log('👛');
     Review.updateHelpfulness(req.query.review_id, (err, data) => {
         if (err) {
             console.log('error in updating helpful controllers', err);
