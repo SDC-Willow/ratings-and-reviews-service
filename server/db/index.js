@@ -1,10 +1,9 @@
-var mysql = require('mysql');
-var {password} = require('../password.js');
+const mysql = require('mysql');
 
 var dbConnection;
 dbConnection = mysql.createConnection({
   user: 'root',
-  password: password,
+  password: process.env.DB_PASSWORD,
   database: 'sdcReviews'
 });
 dbConnection.connect();

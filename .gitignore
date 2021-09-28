@@ -1,3 +1,4 @@
 node_modules
 csv_data
 password.js
+.env

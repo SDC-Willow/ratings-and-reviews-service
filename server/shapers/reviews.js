@@ -17,8 +17,10 @@ const reviewsShaper = (json, product_id, page, count) => {
 };
 
 const photosShaper = (json) => {
-    console.log('🌼', json)
     json.results.map((element) => {
+        if (element.response === 'null') {
+            element.response = '';
+        }
         if (element.id === null) {
             element.photos = [];
         } else {

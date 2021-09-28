@@ -12,7 +12,7 @@ export let options = {
 };
 
 export default () => {
-    http.get('http://localhost:3000/reviews?product_id=50');
+    http.get(`http://localhost:3000/reviews?product_id=${Math.ceil(Math.random() * 10000)}`);
     sleep(1);
 }
 

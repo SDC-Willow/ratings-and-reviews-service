@@ -1,17 +1,6 @@
-// const Product = require('../models/index.js');
 const Review = require('../models/index.js');
 const {reviewsShaper, photosShaper, photosGatherer} = require('../shapers/reviews.js');
 const metaShaper = require('../shapers/metadata.js');
-
-// exports.findOne = (req, res) => {
-//     Product.findById(req.query.product_id, (err, data) => {
-//         if (err) {
-//             res.status(400).send(err);
-//         } else {
-//             res.status(200).send(data);
-//         }
-//     });
-// };
 
 exports.findAllReviews = (req, res) => {
     Review.findAll(req.query.product_id, req.query.page, req.query.count, (err, data) => {
@@ -45,7 +34,6 @@ exports.create = (req, res) => {
 };
 
 exports.updateHelpfulness = (req, res) => {
-    console.log('👛');
     Review.updateHelpfulness(req.query.review_id, (err, data) => {
         if (err) {
             console.log('error in updating helpful controllers', err);
