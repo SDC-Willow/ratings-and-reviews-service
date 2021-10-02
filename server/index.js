@@ -51,7 +51,7 @@ app.get('/loaderio-21a884b39af0488d7834ab6caf215e36/', (req, res) => {
     const fileName = 'loaderio-21a884b39af0488d7834ab6caf215e36/';
     res.sendFile(fileName, options, (err) => {
         if (err) {
-            next(err);
+            console.log(err);
         } else {
             console.log('Sent:', fileName);
         }
