@@ -15,40 +15,10 @@ app.get('/', (req, res) => {
 
 app.get('/loaderio-21a884b39af0488d7834ab6caf215e36.txt', (req, res) => {
     const options = {
-        root: path.join('../', __dirname)
+        root: path.join(__dirname)
     };
      
     const fileName = 'loaderio-21a884b39af0488d7834ab6caf215e36.txt';
-    res.sendFile(fileName, options, (err) => {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log('Sent:', fileName);
-        }
-    });
-});
-
-app.get('/loaderio-21a884b39af0488d7834ab6caf215e36.html', (req, res) => {
-    const options = {
-        root: path.join(__dirname)
-    };
-     
-    const fileName = 'loaderio-21a884b39af0488d7834ab6caf215e36.html';
-    res.sendFile(fileName, options, (err) => {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log('Sent:', fileName);
-        }
-    });
-});
-
-app.get('/loaderio-21a884b39af0488d7834ab6caf215e36/', (req, res) => {
-    const options = {
-        root: path.join(__dirname)
-    };
-     
-    const fileName = 'loaderio-21a884b39af0488d7834ab6caf215e36/';
     res.sendFile(fileName, options, (err) => {
         if (err) {
             console.log(err);
