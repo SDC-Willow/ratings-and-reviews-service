@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require("body-parser");
+const path = require('path');
 const port = 3000;
 require('dotenv').config();
 
@@ -14,7 +15,7 @@ app.get('/', (req, res) => {
 
 app.get('/loaderio-21a884b39af0488d7834ab6caf215e36.txt', (req, res) => {
     const options = {
-        root: path.join(__dirname)
+        root: path.join('../', __dirname)
     };
      
     const fileName = 'loaderio-21a884b39af0488d7834ab6caf215e36.txt';
