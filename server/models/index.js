@@ -26,7 +26,7 @@ Review.findAll = (product_id, page, count, result) => {
         }
     
         if (data.length) {
-            console.log('reviews found!', data);
+            // console.log('reviews found!', data);
             result(null, data);
             return;
         }
@@ -41,7 +41,7 @@ Review.findMetaData = (product_id, result) => {
             console.log('error in findmetadata models', err);
             result(err, null);
         } else {
-            console.log('meta data found!', data);
+            // console.log('meta data found!', data);
             result(null, data);
         }
     });
