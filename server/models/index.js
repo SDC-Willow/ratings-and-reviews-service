@@ -49,18 +49,15 @@ Review.findMetaData = (product_id, result) => {
 
 Review.create = (product_id, rating, summary, body, recommend, username, email, photos, characteristics, result) => {
     recommend = recommend === 'true' ? 1 : 0;
-    console.log('🤢', product_id)
     db.query(`SELECT MAX(id) + 1 FROM reviews`, (err, res) => {
         if (err) {
             res(err, null);
         } else {
             let id = Object.values(res[0])[0];
-            console.log('🥵')
             db.beginTransaction(`INSERT INTO reviews(product_id, rating, summary, body, recommend, reviewer_name, reviewer_email) VALUES('${product_id}', '${rating}', '${summary}', '${body}', '${recommend}', '${username}', '${email}');`, (err) => {
                 if (err) {
                     console.log('error first query', err);
                 } else {
-                    console.log('🤯')
                     db.query(`SET FOREIGN_KEY_CHECKS=0;`, (err) => {
                         if (err) {
                             console.log('error in set foreign key', err);
@@ -69,7 +66,6 @@ Review.create = (product_id, rating, summary, body, recommend, username, email, 
                                 if (err) {
                                     console.log('error in second query', err);
                                 } else {
-                                    console.log('😵‍💫')
                                     db.query(`INSERT INTO characteristic_reviews(characteristic_id, review_id, value) VALUES${objectToQueryConverter(characteristics, id)};`, (err, res) => {
                                         if (err) {
                                             console.log('error in third query', err);
