@@ -1,9 +1,11 @@
 const express = require('express');
 const path = require('path');
-const port = 3000;
 require('dotenv').config();
 
+const port = 3000;
+
 const app = express();
+require('./routes/index.js')(app);
 
 app.use(express.json());
 
@@ -25,8 +27,6 @@ app.get(`/${process.env.LOADERIO}.txt`, (req, res) => {
         }
     });
 });
-
-require('./routes/index.js')(app);
 
 app.listen(port, () => {
     console.log(`Listening at port ${port}`);

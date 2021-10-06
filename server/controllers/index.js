@@ -1,24 +1,36 @@
 const Review = require('../models/index.js');
+const redis = require('redis');
+const REDIS_PORT = 6379;
+const client = redis.createClient(REDIS_PORT);
 const {reviewsShaper, photosShaper, photosGatherer} = require('../shapers/reviews.js');
 const metaShaper = require('../shapers/metadata.js');
 
 exports.findAllReviews = (req, res) => {
+    const product_id = req.query.product_id;
     Review.findAll(req.query.product_id, req.query.page, req.query.count, (err, data) => {
         if (err) {
             res.status(400).send(err);
         } else {
-            const response = photosShaper(reviewsShaper(data, req.query.product_id, req.query.page, req.query.count));
-            res.status(200).send(photosGatherer(response));
+            const response = photosGatherer(photosShaper(reviewsShaper(data, req.query.product_id, req.query.page, req.query.count)));
+            // save/set data to redis
+            // console.log('🤡');
+            // client.set(product_id, JSON.stringify(response));
+            res.status(200).send(response);
         }
     });
 };
 
 exports.findMetaData = (req, res) => {
+    const product_id = req.query.product_id;
     Review.findMetaData(req.query.product_id, (err, data) => {
         if (err) {
             res.status(400).send(err);
         } else {
-            res.status(200).send(metaShaper(data, req.query.product_id));
+            console.log('🧠');
+            const response = metaShaper(data, req.query.product_id);
+            // save/set data to redis
+            client.set(product_id, JSON.stringify(response));
+            res.status(200).send(response);
         }
     });
 };
