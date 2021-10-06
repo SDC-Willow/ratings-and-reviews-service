@@ -1,6 +1,12 @@
 const redis = require('redis');
-const REDIS_PORT = 6379;
-const client = redis.createClient(REDIS_PORT);
+require('dotenv').config();
+const client = redis.createClient({
+    host: process.env.REDIS_HOST || 'localhost',
+    port: process.env.REDIS_PORT || 6379
+});
+client.on('error', err => {
+    console.log('Error ' + err);
+});
 
 // cache middleware
 function cache(req, res, next) {

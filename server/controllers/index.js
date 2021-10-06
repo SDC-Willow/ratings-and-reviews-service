@@ -1,12 +1,18 @@
 const Review = require('../models/index.js');
 const redis = require('redis');
-const REDIS_PORT = 6379;
-const client = redis.createClient(REDIS_PORT);
+require('dotenv').config();
+const client = redis.createClient({
+    host: process.env.REDIS_HOST || 'localhost',
+    port: process.env.REDIS_PORT || 6379
+});
+client.on('error', err => {
+    console.log('Error ' + err);
+});
 const {reviewsShaper, photosShaper, photosGatherer} = require('../shapers/reviews.js');
 const metaShaper = require('../shapers/metadata.js');
 
 exports.findAllReviews = (req, res) => {
-    const product_id = req.query.product_id;
+    // const product_id = req.query.product_id;
     Review.findAll(req.query.product_id, req.query.page, req.query.count, (err, data) => {
         if (err) {
             res.status(400).send(err);
