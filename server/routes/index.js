@@ -7,6 +7,9 @@ const client = redis.createClient({
 client.on('error', err => {
     console.log('Error ' + err);
 });
+client.on('ready', function() {
+    console.log('redis is running');
+});
 
 // cache middleware
 function cache(req, res, next) {

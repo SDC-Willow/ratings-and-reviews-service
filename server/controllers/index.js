@@ -8,6 +8,9 @@ const client = redis.createClient({
 client.on('error', err => {
     console.log('Error ' + err);
 });
+client.on('ready', function() {
+    console.log('redis is running');
+});
 const {reviewsShaper, photosShaper, photosGatherer} = require('../shapers/reviews.js');
 const metaShaper = require('../shapers/metadata.js');
 
