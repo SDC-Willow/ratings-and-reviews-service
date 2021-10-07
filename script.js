@@ -3,16 +3,12 @@ import http from 'k6/http';
 
 export let options = {
     stages: [
-        {duration: '1m', target: 1000},
-        // {duration: '2m', target: 100},
-        // {duration: '5m', target: 200},
-        // {duration: '5m', target: 300},
-        // {duration: '2m', target: 400}
+        {duration: '30m', target: 100}
     ]
 };
 
 export default () => {
-    http.get(`http://localhost:3000/reviews?product_id=${Math.ceil(Math.random() * 10000)}`);
+    http.get(`http://ec2-18-117-155-237.us-east-2.compute.amazonaws.com:3000/reviews/meta?product_id=${Math.floor(Math.random() * (1000011 - 900009 + 1)) + 900009}`);
     sleep(1);
 }
 
